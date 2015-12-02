@@ -1,12 +1,20 @@
 <?php
 session_start();
-$rdir = "r/" . urlencode($_SESSION["ic"]);
-if (file_exists($rdir . "/in.json")) {
-	$json = json_decode(file_get_contents($rdir . "/in.json"), true);
+
+$id = urlencode($_SESSION["ic"]);
+// Record directory
+$rdir = "r/$id/";
+// Current punch card
+$p = "r/$id.json";
+
+if (file_exists($p)) {
+	$json = json_decode(file_get_contents($p), true);
 	$json["endtime"] = time();
-	$json["SERVER"] = $_SERVER;
+	$json["out"] = $_SERVER;
 	file_put_contents($rdir . "/" . $json["endtime"] .  ".json", json_encode($json, JSON_PRETTY_PRINT));
-	unlink($rdir . "/in.json");
+	unlink($p);
+} else { 
+	die ("You weren't clocked in!");
 }
 
 

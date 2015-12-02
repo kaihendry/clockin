@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +7,15 @@ session_start();
 </head>
 <body>
 <?php
+session_start();
 
 $id = urlencode($_SESSION["ic"]);
+// Record directory
+$rdir = "r/$id/";
+// Current punch card
+$p = "r/$id.json";
+
+
 
 if (isset($_GET["ic"])) {
 	$_SESSION = $_GET;
@@ -22,11 +26,6 @@ print_r($_SESSION);
 if (empty($_SESSION['name'])) {
 	die("<a href=/>Click Here to Login</a>");
 }
-
-// Record directory
-$rdir = "r/$id";
-// Current punch card
-$p = $rdir . ".json";
 
 if (! file_exists($rdir)) {
 	if (!mkdir($rdir, 0777, true)) {
@@ -50,6 +49,8 @@ if (file_exists($p)) {
 	echo "<p>Putting you on call</p>";
 	// Clock in
 	$_SESSION["starttime"] = time();
+	// Save server info
+	$_SESSION["in"] = $_SERVER;
 	file_put_contents($p, json_encode($_SESSION, JSON_PRETTY_PRINT));
 	display($p);
 }
@@ -60,7 +61,7 @@ echo "</pre>";
 
 ?>
 
-<p><a href=/logout.php>Clock out</a></p>
+<p><a href=/clockout.php>Clock out</a></p>
 
 <h3>Previous sessions</h3>
 <ul>

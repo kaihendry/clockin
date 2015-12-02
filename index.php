@@ -3,7 +3,7 @@ session_start();
 if ($_SESSION["ic"]) {
 	// If there is an existing session, do not bother to login
 	$url = 'http://' . $_SERVER['HTTP_HOST'];
-	header('Location: ' . $url . "/login.php"); 
+	header('Location: ' . $url . "/clockin.php"); 
 	die();
 }
 ?>
@@ -24,7 +24,7 @@ input:focus { background-color: #FFFFCC; }
 </head>
 <body>
 
-<form action=/login.php method=GET autocomplete=on>
+<form action=/clockin.php method=GET autocomplete=on>
 
 <!-- https://en.wikipedia.org/wiki/Malaysian_identity_card -->
 <input required name=ic placeholder="IC">
