@@ -11,7 +11,9 @@ session_start();
 
 if (isset($_GET["ic"])) {
 	$_SESSION = $_GET;
-} else {
+}
+
+if (empty($_SESSION["ic"])) {
 	die("<a href=/>Click Here to Login</a>");
 }
 
