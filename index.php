@@ -20,6 +20,7 @@ form { display: flex; flex-direction: column; }
 input { font-size: 1.8em; padding: 0.3em; box-sizing: border-box;  display: block; flex: 1;}
 input:focus { background-color: #FFFFCC; }
 </style>
+<script src=main.js></script>
 </head>
 <body>
 
@@ -30,16 +31,25 @@ input:focus { background-color: #FFFFCC; }
 
 <input required name=name placeholder="Name">
 <input required name=tel type=tel placeholder="Mobile number">
-<input type=submit>
+
+<input type=submit value="Clock in">
+
 </form>
 
+<h3>Clocked in users</h3>
+<ol>
+<?php
+foreach (glob("r/*.json") as $responder) { 
+	$json = json_decode(file_get_contents($responder), true);
+	$ft = date("c", $json["starttime"]);
+	echo "<li><a title=\"" . $json["ic"] . "\" href=tel:" . $json["tel"] . ">" . $json["name"] . "</a> <time dateTime=$ft>$ft</time> <button>Clock out</button></li>";
+}
+?>
+</ol>
+
+<h3>PHP sessions</h3>
 <ul>
 <?php
-foreach (glob("r/*/in.json") as $responder) { 
-	$json = json_decode(file_get_contents($responder), true);
-	echo "<li>" . $json["name"] . " on duty since " . date("c", $json["starttime"]) . ". " . $json["ic"] . " " . $json["tel"] . "</li>";
-}
-
 foreach (glob(session_save_path() . "/*") as $activesession) { 
 	echo "<li>" . basename($activesession) . "</li>";
 }
