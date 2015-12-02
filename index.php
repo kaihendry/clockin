@@ -3,7 +3,7 @@ session_start();
 if ($_SESSION["ic"]) {
 	// If there is an existing session, do not bother to login
 	$url = 'http://' . $_SERVER['HTTP_HOST'];
-	header('Location: ' . $url . "/clockin.php"); 
+	header('Location: ' . $url . "/clockin.php");
 	die();
 }
 ?>
@@ -11,7 +11,7 @@ if ($_SESSION["ic"]) {
 <html>
 <head>
 <meta charset="utf-8">
-<title>Punch in <?php echo session_id();?></title>  
+<title>Punch in <?php echo session_id();?></title>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <style>
 body { font-family: sans-serif; }
@@ -39,10 +39,10 @@ input:focus { background-color: #FFFFCC; }
 <h3>Clocked in users</h3>
 <ol>
 <?php
-foreach (glob("r/*.json") as $responder) { 
+foreach (glob("r/*.json") as $responder) {
 	$json = json_decode(file_get_contents($responder), true);
-	$ft = date("c", $json["starttime"]);
-	echo "<li><a title=\"" . $json["ic"] . "\" href=tel:" . $json["tel"] . ">" . $json["name"] . "</a> <time dateTime=$ft>$ft</time> <button>Clock out</button></li>";
+	$ft = date("c", $json["intime"]);
+	echo "<li><a title=\"" . $json["ic"] . "\" href=tel:" . $json["tel"] . ">" . $json["name"] . "</a> <time dateTime=$ft>$ft</time> <a href=/clockout.php?ic=" . $json["ic"] . "><button>Clock out</button></a></li>";
 }
 ?>
 </ol>
@@ -50,7 +50,7 @@ foreach (glob("r/*.json") as $responder) {
 <h3>PHP sessions</h3>
 <ul>
 <?php
-foreach (glob(session_save_path() . "/*") as $activesession) { 
+foreach (glob(session_save_path() . "/*") as $activesession) {
 	echo "<li>" . basename($activesession) . "</li>";
 }
 ?>
@@ -59,5 +59,6 @@ foreach (glob(session_save_path() . "/*") as $activesession) {
 <?php if(!empty($_SESSION)) { print_r($_SESSION); } ?>
 </pre>
 
+<p><a href=https://github.com/kaihendry/clockin>MIT licensed source code</a></p>
 </body>
 </html>

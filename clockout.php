@@ -1,7 +1,13 @@
 <?php
 session_start();
 
-$id = urlencode($_SESSION["ic"]);
+// If you know the IC you can log that person out
+if (isset($_GET["ic"])) {
+	$id = urlencode($_GET["ic"]);
+} else {
+	$id = urlencode($_SESSION["ic"]);
+}
+
 // Record directory
 $rdir = "r/$id/";
 // Current punch card
@@ -9,11 +15,11 @@ $p = "r/$id.json";
 
 if (file_exists($p)) {
 	$json = json_decode(file_get_contents($p), true);
-	$json["endtime"] = time();
+	$json["outtime"] = time();
 	$json["out"] = $_SERVER;
-	file_put_contents($rdir . "/" . $json["endtime"] .  ".json", json_encode($json, JSON_PRETTY_PRINT));
+	file_put_contents($rdir . "/" . $json["outtime"] .  ".json", json_encode($json, JSON_PRETTY_PRINT));
 	unlink($p);
-} else { 
+} else {
 	die ("You weren't clocked in!");
 }
 
@@ -33,6 +39,6 @@ if (ini_get("session.use_cookies")) {
 
 if (session_destroy()) {
 	$url = 'http://' . $_SERVER['HTTP_HOST'];
-	header('Location: ' . $url); 
+	header('Location: ' . $url);
 }
 ?>
