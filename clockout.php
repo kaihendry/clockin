@@ -3,12 +3,14 @@ session_start();
 
 // If you know the IC you can log that person out
 if (isset($_GET["ic"])) {
-	$_SESSION["ic"] = $_GET["ic"];
+	$_SESSION["ic"] =  preg_replace("/[^0-9]/", "", $_GET["ic"]);
 }
 
-$id = urlencode($_SESSION["ic"]);
+if(empty($_SESSION["ic"])) { die("Invalid IC"); }
+
+$id = $_SESSION["ic"];
 // Record directory
-$rdir = "r/$id/";
+$rdir = "r/$id";
 // Current punch card
 $p = "r/$id.json";
 

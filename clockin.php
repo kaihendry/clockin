@@ -12,14 +12,16 @@ require("common.php");
 <body>
 <?php
 if (isset($_GET["ic"])) {
-	$_SESSION["ic"] = $_GET["ic"];
-	$_SESSION["name"] = $_GET["name"];
-	$_SESSION["tel"] = $_GET["tel"];
+	$_SESSION["ic"] =  preg_replace("/[^0-9]/", "", $_GET["ic"]);
+	$_SESSION["name"] = substr($_GET["name"], 0, 64);
+	$_SESSION["tel"] = preg_replace("/[^0-9]/", "", $_GET["tel"]);
 }
 
-$id = urlencode($_SESSION["ic"]);
+if(empty($_SESSION["ic"])) { die("Invalid IC"); }
+
+$id = $_SESSION["ic"];
 // Record directory
-$rdir = "r/$id/";
+$rdir = "r/$id";
 // Current punch card
 $p = "r/$id.json";
 
