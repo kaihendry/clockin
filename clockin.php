@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +10,6 @@
 </head>
 <body>
 <?php
-session_start();
-
 if (isset($_GET["ic"])) {
 	$_SESSION["ic"] = $_GET["ic"];
 	$_SESSION["name"] = $_GET["name"];
