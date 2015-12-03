@@ -39,7 +39,7 @@ if (! file_exists($rdir)) {
 
 if (file_exists($p)) {
 	echo "<p>On call</p>";
-	display($p);
+	echo "<p>" . display($p) . "</p>";
 } else {
 	echo "<p>Putting you on call</p>";
 	// Clock in
@@ -48,7 +48,7 @@ if (file_exists($p)) {
 	// Save server info (might be useful)
 	$ci["sin"] = $_SERVER;
 	file_put_contents($p, json_encode($ci, JSON_PRETTY_PRINT));
-	display($p);
+	echo "<p>" . display($p) . "</p>";
 }
 
 ?>
@@ -59,7 +59,7 @@ if (file_exists($p)) {
 <ul>
 <?php
 foreach (glob($rdir . "/*.json") as $shifts) {
-	display($shifts);
+	echo "<li>" . display($shifts) . "</li>";
 }
 ?>
 </ul>

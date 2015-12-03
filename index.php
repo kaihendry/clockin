@@ -35,19 +35,20 @@ require("common.php");
 <ol>
 <?php
 foreach (glob("r/*.json") as $responder) {
-	display($responder);
+	echo "<li>" . display($responder) . "</li>";
 }
 ?>
 </ol>
 
-<h3>PHP sessions</h3>
-<ul>
+<!-- PHP SESSIONS
 <?php
 foreach (glob(session_save_path() . "/*") as $activesession) {
-	echo "<li>" . basename($activesession) . "</li>";
+	echo "<li>" . basename($activesession) . "</li>\n";
 }
 ?>
-</ul>
+-->
+
+<p>Total shifts: <?php echo `find -mindepth 3  -name '*.json' | wc -l`;?></p>
 
 <p><a href=https://github.com/kaihendry/clockin>MIT licensed source code</a></p>
 </body>
