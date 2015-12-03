@@ -8,6 +8,7 @@ require("common.php");
 <meta charset="utf-8">
 <title>Punched in <?php echo session_id();?></title>
 <meta name=viewport content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet">
 </head>
 <body>
 <?php
@@ -17,7 +18,8 @@ if (isset($_GET["ic"])) {
 	$_SESSION["tel"] = preg_replace("/[^0-9]/", "", $_GET["tel"]);
 }
 
-if(empty($_SESSION["ic"])) { die("Invalid IC"); }
+if(! is_numeric($_SESSION["ic"])) { session_destroy(); die("Invalid IC"); }
+if(! is_numeric($_SESSION["tel"])) { session_destroy(); die("Invalid telephone"); }
 
 $id = $_SESSION["ic"];
 // Record directory
