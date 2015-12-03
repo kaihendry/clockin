@@ -11,11 +11,4 @@ function display($r) {
 		echo "<p><a href=" . urlencode($r) . ">" . e($json["name"]) . " on duty since <time dateTime=$ft>$ft</time> with mobile number " . e($json["tel"]) . "</a></p>";
 	}
 }
-
-$id = urlencode($_SESSION["ic"]);
-// Record directory
-$rdir = "r/$id/";
-// Current punch card
-$p = "r/$id.json";
-
 ?>

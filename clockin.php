@@ -1,5 +1,6 @@
 <?php
 session_start();
+require("common.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,11 @@ if (isset($_GET["ic"])) {
 	$_SESSION["tel"] = $_GET["tel"];
 }
 
-require("common.php");
+$id = urlencode($_SESSION["ic"]);
+// Record directory
+$rdir = "r/$id/";
+// Current punch card
+$p = "r/$id.json";
 
 if (empty($_SESSION["ic"])) {
 	die("<a href=/>Click Here to Login</a>");

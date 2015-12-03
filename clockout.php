@@ -6,7 +6,11 @@ if (isset($_GET["ic"])) {
 	$_SESSION["ic"] = $_GET["ic"];
 }
 
-require("common.php");
+$id = urlencode($_SESSION["ic"]);
+// Record directory
+$rdir = "r/$id/";
+// Current punch card
+$p = "r/$id.json";
 
 if (file_exists($p)) {
 	$json = json_decode(file_get_contents($p), true);
