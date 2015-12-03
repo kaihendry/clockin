@@ -6,6 +6,7 @@ if ($_SESSION["ic"]) {
 	header('Location: ' . $url . "/clockin.php");
 	die();
 }
+require("common.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,13 +14,7 @@ if ($_SESSION["ic"]) {
 <meta charset="utf-8">
 <title>Punch in <?php echo session_id();?></title>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<style>
-body { font-family: sans-serif; }
-form { display: flex; flex-direction: column; }
-.row { display: flex;}
-input { font-size: 1.8em; padding: 0.3em; box-sizing: border-box;  display: block; flex: 1;}
-input:focus { background-color: #FFFFCC; }
-</style>
+<link href="/style.css" rel="stylesheet">
 <script src=main.js></script>
 </head>
 <body>
@@ -40,9 +35,7 @@ input:focus { background-color: #FFFFCC; }
 <ol>
 <?php
 foreach (glob("r/*.json") as $responder) {
-	$json = json_decode(file_get_contents($responder), true);
-	$ft = date("c", $json["intime"]);
-	echo "<li><a title=\"" . $json["ic"] . "\" href=tel:" . $json["tel"] . ">" . $json["name"] . "</a> <time dateTime=$ft>$ft</time> <a href=/clockout.php?ic=" . $json["ic"] . "><button>Clock out</button></a></li>";
+	display($responder);
 }
 ?>
 </ol>
@@ -55,9 +48,6 @@ foreach (glob(session_save_path() . "/*") as $activesession) {
 }
 ?>
 </ul>
-<pre>
-<?php if(!empty($_SESSION)) { print_r($_SESSION); } ?>
-</pre>
 
 <p><a href=https://github.com/kaihendry/clockin>MIT licensed source code</a></p>
 </body>
